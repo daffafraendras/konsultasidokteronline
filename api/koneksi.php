@@ -1,7 +1,7 @@
 <?php
 // Data dari TiDB Cloud
 $host = 'gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com';
-$port = '4000';
+$port = 4000;
 $user = 'xSvt4gqzXgractK.root';
 $pass = 'fmB4TCOVTztnyEzP';
 $db   = 'telemedicine';
