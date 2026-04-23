@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 include 'koneksi.php';
 
 if(isset($_SESSION['role'])) {
-    header("Location: index.php");
+    header("Location: index.html");
     exit;
 }
 
