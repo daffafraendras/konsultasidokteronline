@@ -1,14 +1,20 @@
-<?php 
+<?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include 'koneksi.php';
-
-if(isset($_SESSION['role'])) {
-    header("Location: ../index.html");
-    exit;
+// SATPAM LOGIN: Kalau sudah punya cookie, langsung pindahkan!
+if (isset($_COOKIE['role'])) {
+    if ($_COOKIE['role'] == 'admin') {
+        header("Location: admin.php");
+        exit;
+    } else {
+        header("Location: menu.php");
+        exit;
+    }
 }
+
+include 'koneksi.php';
 
 if(isset($_POST['submit'])) { // atau apapun nama tombol submit-mu
     $email = mysqli_real_escape_string($koneksi, $_POST['email']);
@@ -22,21 +28,23 @@ if(isset($_POST['submit'])) { // atau apapun nama tombol submit-mu
         $data_user = mysqli_fetch_assoc($cek_user);
         
         // Sekarang $password sudah ada isinya, jadi error baris 24 akan hilang!
+        // ... kode di atasnya ...
         if (password_verify($password, $data_user['password'])) {
-            // ... (kode setcookie dll)
+            // 1. SET COOKIE (Pastikan tidak ada 'echo' sebelum baris ini)
             setcookie("role", $data_user['role'], time() + 86400, "/");
             setcookie("nama", $data_user['nama'], time() + 86400, "/");
 
-            // CEK ROLE LALU ARAHKAN KE HALAMAN YANG BENAR
+            // 2. PENGALIHAN YANG AMAN UNTUK VERCEL
             if ($data_user['role'] == 'admin') {
-                header("Location: admin.php"); // Admin ke admin.php
+                echo "<script>alert('Login berhasil sebagai Admin!');</script>";
+                header("Refresh: 0; URL=admin.php");
             } else {
-                header("Location: menu.php"); // Guest ke menu.php
+                echo "<script>alert('Login berhasil! Selamat datang.');</script>";
+                header("Refresh: 0; URL=menu.php");
             }
-            exit;
+            exit; // Wajib ada exit agar kode di bawahnya berhenti dieksekusi
         } else {
-            // Jika password salah
-            echo "<script>alert('Password salah! Silakan coba lagi.');</script>";
+            echo "<script>alert('Password salah!');</script>";
         }
     } else {
         // Jika email tidak ditemukan
