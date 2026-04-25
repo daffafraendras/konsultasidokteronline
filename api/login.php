@@ -11,11 +11,11 @@ if(isset($_SESSION['role'])) {
 }
 
 if(isset($_POST['submit_login'])){
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $email = mysqli_real_escape_string($koneksi, $_POST['email']);
     $password_input = $_POST['password'];
     
     // Cari data user HANYA berdasarkan email terlebih dahulu
-    $query = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    $query = mysqli_query($koneksi, "SELECT * FROM users WHERE email='$email'");
     
     if(mysqli_num_rows($query) > 0){
         $data_user = mysqli_fetch_assoc($query);

@@ -11,14 +11,14 @@ if(isset($_SESSION['role'])) {
 }
 
 if(isset($_POST['submit_register'])){
-    $nama = mysqli_real_escape_string($conn, $_POST['nama']); 
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $nama = mysqli_real_escape_string($koneksi, $_POST['nama']); 
+    $email = mysqli_real_escape_string($koneksi, $_POST['email']);
     $password_mentah = $_POST['password'];
     
     // Proses Hashing Password
     $password_hashed = password_hash($password_mentah, PASSWORD_DEFAULT);
     
-    $cek_email = mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'");
+    $cek_email = mysqli_query($koneksi, "SELECT * FROM users WHERE email = '$email'");
     
     if(mysqli_num_rows($cek_email) > 0){
         echo "<script>alert('Email sudah terdaftar! Silakan gunakan email lain atau Login.');</script>";
@@ -26,7 +26,7 @@ if(isset($_POST['submit_register'])){
         // Simpan password yang sudah di-hash ke database
         $query_simpan = "INSERT INTO users (nama, email, password, role) VALUES ('$nama', '$email', '$password_hashed', 'guest')";
         
-        if(mysqli_query($conn, $query_simpan)){
+        if(mysqli_query($koneksi, $query_simpan)){
             $_SESSION['role'] = 'guest';
             $_SESSION['nama'] = $nama;
             
