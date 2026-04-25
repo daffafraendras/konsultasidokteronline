@@ -10,19 +10,20 @@ if(isset($_SESSION['role'])) {
     exit;
 }
 
-if(isset($_POST['submit_login'])){
+if(isset($_POST['submit'])) { // atau apapun nama tombol submit-mu
     $email = mysqli_real_escape_string($koneksi, $_POST['email']);
-    $password_input = $_POST['password'];
     
-    // Cari data user HANYA berdasarkan email terlebih dahulu
-    $query = mysqli_query($koneksi, "SELECT * FROM users WHERE email='$email'");
-    
-    if(mysqli_num_rows($query) > 0){
-        $data_user = mysqli_fetch_assoc($query);
+    // 👇 TAMBAHKAN BARIS INI (Ini yang tadi hilang/terlupa)
+    $password = $_POST['password']; 
+
+    $cek_user = mysqli_query($koneksi, "SELECT * FROM users WHERE email = '$email'");
+
+    if(mysqli_num_rows($cek_user) > 0){
+        $data_user = mysqli_fetch_assoc($cek_user);
         
-        // Cek apakah password yang diinput cocok dengan hash di database
+        // Sekarang $password sudah ada isinya, jadi error baris 24 akan hilang!
         if (password_verify($password, $data_user['password'])) {
-            // SET COOKIE
+            // ... (kode setcookie dll)
             setcookie("role", $data_user['role'], time() + 86400, "/");
             setcookie("nama", $data_user['nama'], time() + 86400, "/");
 
