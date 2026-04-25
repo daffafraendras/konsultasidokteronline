@@ -29,20 +29,26 @@ if(isset($_POST['submit_login'])) {
         
         // Sekarang $password sudah ada isinya, jadi error baris 24 akan hilang!
         // ... kode di atasnya ...
+        // ... kode di atasnya (password_verify dan setcookie) ...
+        
         if (password_verify($password, $data_user['password'])) {
-            // 1. SET COOKIE (Pastikan tidak ada 'echo' sebelum baris ini)
+            // 1. SET COOKIE
             setcookie("role", $data_user['role'], time() + 86400, "/");
             setcookie("nama", $data_user['nama'], time() + 86400, "/");
 
-            // 2. PENGALIHAN YANG AMAN UNTUK VERCEL
+            // 2. PENGALIHAN MENGGUNAKAN JAVASCRIPT
             if ($data_user['role'] == 'admin') {
-                echo "<script>alert('Login berhasil sebagai Admin!');</script>";
-                header("Refresh: 0; URL=admin.php");
+                echo "<script>
+                        alert('Login berhasil sebagai Admin!');
+                        window.location.href = 'admin.php';
+                      </script>";
             } else {
-                echo "<script>alert('Login berhasil! Selamat datang.');</script>";
-                header("Refresh: 0; URL=menu.php");
+                echo "<script>
+                        alert('Login berhasil! Selamat datang.');
+                        window.location.href = 'menu.php';
+                      </script>";
             }
-            exit; // Wajib ada exit agar kode di bawahnya berhenti dieksekusi
+            exit; 
         } else {
             echo "<script>alert('Password salah!');</script>";
         }
