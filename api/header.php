@@ -17,7 +17,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <div class="container">
             <a class="navbar-brand" href="index.php">
                 <img src="../logo.png" alt="Logo" style="height: 40px;">
-                <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                <?php if(isset($_COOKIE['role']) && $_COOKIE['role'] == 'admin'): ?>
                     <span class="ms-2 fw-bold text-danger">ADMIN</span>
                 <?php endif; ?>
             </a>
@@ -28,15 +28,15 @@ if (session_status() == PHP_SESSION_NONE) {
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     
-                    <?php if(!isset($_SESSION['role'])): ?>
+                    <?php if(!isset($_COOKIE['role'])): ?>
                         <li class="nav-item"><a class="btn btn-glass ms-lg-3" href="login.php">Login</a></li>
                         <li class="nav-item"><a class="btn btn-glass ms-lg-2" href="register.php">Register</a></li>
                     
-                    <?php elseif($_SESSION['role'] == 'guest'): ?>
+                    <?php elseif($_COOKIE['role'] == 'guest'): ?>
                         <li class="nav-item"><a class="btn btn-glass ms-lg-3" href="menu.php">💬 Konsultasi</a></li>
                         <li class="nav-item"><a class="nav-link text-danger ms-lg-2 fw-bold" href="logout.php">Logout</a></li>
                     
-                    <?php elseif($_SESSION['role'] == 'admin'): ?>
+                    <?php elseif($_COOKIE['role'] == 'admin'): ?>
                         <li class="nav-item"><a class="nav-link" href="admin.php">Panel Admin</a></li>
                         <li class="nav-item"><a class="btn btn-glass ms-lg-3 text-danger" href="logout.php">Logout</a></li>
                     <?php endif; ?>

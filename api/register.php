@@ -10,7 +10,7 @@ if(isset($_SESSION['role'])) {
     exit;
 }
 
-if(isset($_POST['submit_register'])){
+if(isset($_POST['submit_register'])){   
     $nama = mysqli_real_escape_string($koneksi, $_POST['nama']); 
     $email = mysqli_real_escape_string($koneksi, $_POST['email']);
     $password_mentah = $_POST['password'];
@@ -27,8 +27,13 @@ if(isset($_POST['submit_register'])){
         $query_simpan = "INSERT INTO users (nama, email, password, role) VALUES ('$nama', '$email', '$password_hashed', 'guest')";
         
         if(mysqli_query($koneksi, $query_simpan)){
-            $_SESSION['role'] = 'guest';
-            $_SESSION['nama'] = $nama;
+            // HAPUS INI:
+            // $_SESSION['role'] = 'guest';
+            // $_SESSION['nama'] = $nama;
+            
+            // GANTI MENJADI:
+            setcookie("role", "guest", time() + 86400, "/");
+            setcookie("nama", $nama, time() + 86400, "/");
             
             echo "<script>
                     alert('Pendaftaran berhasil! Selamat datang, $nama.');
@@ -71,4 +76,5 @@ include 'header.php';
     </div>
 </div>
 
-<?php include 'footer.php'; ?>
+<?php include 'footer.php'; 
+?>

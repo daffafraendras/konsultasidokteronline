@@ -1,6 +1,6 @@
 <?php
-session_start();
-session_destroy(); // Menghapus semua sesi login
-header("Location: index.php"); // Kembali ke depan
+setcookie("role", "", time() - 3600, "/");
+setcookie("nama", "", time() - 3600, "/");
+header("Location: ../index.html");
 exit;
 ?>

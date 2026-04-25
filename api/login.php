@@ -23,9 +23,13 @@ if(isset($_POST['submit_login'])){
         // Cek apakah password yang diinput cocok dengan hash di database
         if(password_verify($password_input, $data_user['password'])){
             
-            // Jika cocok, buat session
-            $_SESSION['role'] = $data_user['role'];
-            $_SESSION['nama'] = $data_user['nama'];
+            // Jika cocok, buat session (HAPUS KODE INI)
+            // $_SESSION['role'] = $data_user['role'];
+            // $_SESSION['nama'] = $data_user['nama'];
+            
+            // GANTI MENJADI COOKIES (Berlaku 1 hari):
+            setcookie("role", $data_user['role'], time() + 86400, "/");
+            setcookie("nama", $data_user['nama'], time() + 86400, "/");
             
             if($data_user['role'] == 'admin'){
                 echo "<script>window.location.href='admin.php';</script>";
