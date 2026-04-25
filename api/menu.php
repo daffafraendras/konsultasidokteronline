@@ -1,16 +1,19 @@
-<?php
-// 1. Pengecekan Session WAJIB dilakukan paling atas, sebelum include atau HTML
+<?php 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// 2. Perbaiki logika pengecekan role
-// Jika role KOSONG atau role ADALAH admin, maka larang masuk menu.php
-// (Asumsinya menu.php hanya untuk pasien biasa, baik rolenya 'user' atau 'guest')
-if(!isset($_SESSION['role']) || $_SESSION['role'] == 'admin') {
-    header("Location: login.php");
-    exit; // Wajib pakai exit setelah header
-}
+// 1. MATIKAN SEMENTARA FITUR TENDANGANNYA
+// if(!isset($_SESSION['role']) || $_SESSION['role'] == 'admin') {
+//     header("Location: login.php");
+//     exit;
+// }
+
+// 2. TAMPILKAN ISI SESSION KE LAYAR UNTUK CEK
+echo "<div style='background: white; padding: 20px; color: red;'>";
+echo "<h4>CEK SESSION SAAT INI:</h4>";
+var_dump($_SESSION);
+echo "</div>";
 
 include 'header.php'; 
 ?>
