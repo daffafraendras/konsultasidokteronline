@@ -15,25 +15,27 @@ if(!isset($_COOKIE['role']) || $_COOKIE['role'] != 'guest') {
 $dokter_pilihan = isset($_GET['dokter']) ? $_GET['dokter'] : '';
 
 // Proses simpan jadwal ke database saat tombol Konfirmasi ditekan
+// Proses simpan jadwal ke database saat tombol Konfirmasi ditekan
 if(isset($_POST['submit_jadwal'])){
     
-    // 2. UBAH DI SINI: Ambil nama dari $_COOKIE
+    // Ambil nama dari $_COOKIE
     $nama_pasien = $_COOKIE['nama']; 
     
-    // Ambil data dari form
-    $dokter_tujuan = mysqli_real_escape_string($conn, $_POST['dokter_tujuan']);
-    $tanggal = mysqli_real_escape_string($conn, $_POST['tanggal']);
-    $waktu = mysqli_real_escape_string($conn, $_POST['waktu']);
-    $keluhan = mysqli_real_escape_string($conn, $_POST['keluhan']);
+    // UBAH DI SINI: Gunakan $koneksi, bukan $conn
+    $dokter_tujuan = mysqli_real_escape_string($koneksi, $_POST['dokter_tujuan']);
+    $tanggal = mysqli_real_escape_string($koneksi, $_POST['tanggal']);
+    $waktu = mysqli_real_escape_string($koneksi, $_POST['waktu']);
+    $keluhan = mysqli_real_escape_string($koneksi, $_POST['keluhan']);
 
     // Simpan ke database
     $query = "INSERT INTO jadwal (nama_pasien, dokter_tujuan, tanggal, waktu, keluhan, status) 
               VALUES ('$nama_pasien', '$dokter_tujuan', '$tanggal', '$waktu', '$keluhan', 'menunggu')";
     
-    if(mysqli_query($conn, $query)){
+    // UBAH DI SINI JUGA: Gunakan $koneksi
+    if(mysqli_query($koneksi, $query)){
         echo "<script>
                 alert('Jadwal berhasil diajukan! Menunggu konfirmasi admin.');
-                window.location.href='../index.html';
+                window.location.href='menu.php';
               </script>";
         exit;
     } else {
