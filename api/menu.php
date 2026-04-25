@@ -1,10 +1,18 @@
-<?php 
-include 'header.php'; 
-
-if(!isset($_SESSION['role']) || $_SESSION['role'] != 'guest') {
-    header("Location: login.php");
-    exit;
+<?php
+// 1. Pengecekan Session WAJIB dilakukan paling atas, sebelum include atau HTML
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
+
+// 2. Perbaiki logika pengecekan role
+// Jika role KOSONG atau role ADALAH admin, maka larang masuk menu.php
+// (Asumsinya menu.php hanya untuk pasien biasa, baik rolenya 'user' atau 'guest')
+if(!isset($_SESSION['role']) || $_SESSION['role'] == 'admin') {
+    header("Location: login.php");
+    exit; // Wajib pakai exit setelah header
+}
+
+include 'header.php'; 
 ?>
  
 <div class="container">
