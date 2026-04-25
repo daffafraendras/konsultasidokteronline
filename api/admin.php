@@ -1,12 +1,12 @@
-<?php 
+<?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 include 'koneksi.php';
 
-// Mengecek apakah yang akses benar admin
-if(!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+// SATPAM SEKARANG MENGECEK COOKIE, BUKAN SESSION
+if(!isset($_COOKIE['role']) || $_COOKIE['role'] != 'admin') {
     header("Location: login.php");
     exit;
 }
@@ -14,7 +14,7 @@ if(!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
 // Logc untuk Menyetujui Jadwal
 if(isset($_GET['setujui'])){
     $id_jadwal = $_GET['setujui'];
-    mysqli_query($conn, "UPDATE jadwal SET status='disetujui' WHERE id='$id_jadwal'");
+    mysqli_query($koneksi, "UPDATE jadwal SET status='disetujui' WHERE id='$id_jadwal'");
     echo "<script>alert('Jadwal berhasil disetujui!'); window.location.href='admin.php';</script>";
     exit;
 }
@@ -22,7 +22,7 @@ if(isset($_GET['setujui'])){
 // Logic untuk Menghapus Jadwal
 if(isset($_GET['hapus'])){
     $id_jadwal = $_GET['hapus'];
-    mysqli_query($conn, "DELETE FROM jadwal WHERE id='$id_jadwal'");
+    mysqli_query($koneksi, "DELETE FROM jadwal WHERE id='$id_jadwal'");
     echo "<script>alert('Jadwal berhasil dihapus!'); window.location.href='admin.php';</script>";
     exit;
 }
@@ -52,7 +52,7 @@ include 'header.php';
             <tbody>
                 <?php 
                 // Mengambil data jadwal dari database diurutkan dari yang paling baru
-                $query = mysqli_query($conn, "SELECT * FROM jadwal ORDER BY id DESC");
+                $query = mysqli_query($koneksi, "SELECT * FROM jadwal ORDER BY id DESC");
                 $no = 1;
 
                 if(mysqli_num_rows($query) > 0){

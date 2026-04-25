@@ -21,20 +21,16 @@ if(isset($_POST['submit_login'])){
         $data_user = mysqli_fetch_assoc($query);
         
         // Cek apakah password yang diinput cocok dengan hash di database
-        if(password_verify($password_input, $data_user['password'])){
-            
-            // Jika cocok, buat session (HAPUS KODE INI)
-            // $_SESSION['role'] = $data_user['role'];
-            // $_SESSION['nama'] = $data_user['nama'];
-            
-            // GANTI MENJADI COOKIES (Berlaku 1 hari):
+        if (password_verify($password, $data_user['password'])) {
+            // SET COOKIE
             setcookie("role", $data_user['role'], time() + 86400, "/");
             setcookie("nama", $data_user['nama'], time() + 86400, "/");
-            
-            if($data_user['role'] == 'admin'){
-                echo "<script>window.location.href='admin.php';</script>";
+
+            // CEK ROLE LALU ARAHKAN KE HALAMAN YANG BENAR
+            if ($data_user['role'] == 'admin') {
+                header("Location: admin.php"); // Admin ke admin.php
             } else {
-                echo "<script>window.location.href='menu.php';</script>";
+                header("Location: menu.php"); // Guest ke menu.php
             }
             exit;
         } else {
