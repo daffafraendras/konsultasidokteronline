@@ -16,7 +16,7 @@ if (isset($_COOKIE['role'])) {
 
 include 'koneksi.php';
 
-if(isset($_POST['submit'])) { // atau apapun nama tombol submit-mu
+if(isset($_POST['submit_login'])) { 
     $email = mysqli_real_escape_string($koneksi, $_POST['email']);
     
     // 👇 TAMBAHKAN BARIS INI (Ini yang tadi hilang/terlupa)
