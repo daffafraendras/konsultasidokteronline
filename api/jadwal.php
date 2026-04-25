@@ -5,8 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
 
 include 'koneksi.php';
 
-// Memastikan hanya pasien (guest) yang bisa akses
-if(!isset($_SESSION['role']) || $_SESSION['role'] != 'guest') {
+// 1. UBAH DI SINI: Gunakan $_COOKIE, bukan $_SESSION
+if(!isset($_COOKIE['role']) || $_COOKIE['role'] != 'guest') {
     header("Location: login.php");
     exit;
 }
@@ -16,8 +16,9 @@ $dokter_pilihan = isset($_GET['dokter']) ? $_GET['dokter'] : '';
 
 // Proses simpan jadwal ke database saat tombol Konfirmasi ditekan
 if(isset($_POST['submit_jadwal'])){
-    // Ambil nama dari session orang yang sedang login
-    $nama_pasien = $_SESSION['nama']; 
+    
+    // 2. UBAH DI SINI: Ambil nama dari $_COOKIE
+    $nama_pasien = $_COOKIE['nama']; 
     
     // Ambil data dari form
     $dokter_tujuan = mysqli_real_escape_string($conn, $_POST['dokter_tujuan']);
@@ -32,7 +33,7 @@ if(isset($_POST['submit_jadwal'])){
     if(mysqli_query($conn, $query)){
         echo "<script>
                 alert('Jadwal berhasil diajukan! Menunggu konfirmasi admin.');
-                window.location.href='menu.php';
+                window.location.href='../index.html';
               </script>";
         exit;
     } else {
