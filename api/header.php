@@ -16,7 +16,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <nav class="navbar navbar-expand-lg navbar-glass sticky-top mb-5">
         <div class="container">
             <a class="navbar-brand" href="index.php">
-                <img src="logo.png" alt="Logo" style="height: 40px;">
+                <img src="..\logo.png" alt="Logo" style="height: 40px;">
                 <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
                     <span class="ms-2 fw-bold text-danger">ADMIN</span>
                 <?php endif; ?>
