@@ -44,67 +44,57 @@ include 'header.php';
 
 <div class="container mt-4 mb-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 style="color: #006b8f; font-weight: bold;">Panel Admin - Kelola Jadwal</h2>
+        <h2 style="color: #006b8f; font-weight: bold;">Panel Admin</h2>
     </div>
 
-    <div class="glass-panel p-3 p-md-4">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle text-nowrap mb-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th class="text-center">No</th>
-                        <th>Nama Pasien</th>
-                        <th>Poli / Dokter</th>
-                        <th>Tanggal</th>
-                        <th>Waktu</th>
-                        <th>Keluhan</th>
-                        <th>Status</th>
-                        <th class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                    // Mengambil data jadwal dari database diurutkan dari yang paling baru
-                    $query = mysqli_query($koneksi, "SELECT * FROM jadwal ORDER BY id DESC");
-                    $no = 1;
-
-                    if(mysqli_num_rows($query) > 0){
-                        while($row = mysqli_fetch_assoc($query)){
-                    ?>
-                    <tr>
-                        <td class="text-center"><?= $no++; ?></td>
-                        <td class="fw-bold"><?= htmlspecialchars($row['nama_pasien']); ?></td>
-                        <td><?= htmlspecialchars(ucfirst($row['dokter_tujuan'])); ?></td>
-                        <td><?= date('d-m-Y', strtotime($row['tanggal'])); ?></td>
-                        <td><?= htmlspecialchars($row['waktu']); ?></td>
-                        <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">
+    <div class="glass-panel p-2 p-md-4">
+        <table class="table table-hover align-middle mb-0" style="font-size: 0.85rem;">
+            <thead class="table-dark">
+                <tr>
+                    <th class="p-1 text-center" style="width: 5%;">No</th>
+                    <th class="p-1" style="width: 20%;">Pasien</th>
+                    <th class="p-1 d-none d-md-table-cell">Poli/Dokter</th> <th class="p-1">Tanggal</th>
+                    <th class="p-1 d-none d-sm-table-cell">Waktu</th> <th class="p-1">Keluhan</th>
+                    <th class="p-1 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $query = mysqli_query($koneksi, "SELECT * FROM jadwal ORDER BY id DESC");
+                $no = 1;
+                if(mysqli_num_rows($query) > 0){
+                    while($row = mysqli_fetch_assoc($query)){
+                ?>
+                <tr>
+                    <td class="text-center p-1"><?= $no++; ?></td>
+                    <td class="p-1">
+                        <div class="fw-bold text-wrap" style="max-width: 80px;"><?= htmlspecialchars($row['nama_pasien']); ?></div>
+                    </td>
+                    <td class="p-1 d-none d-md-table-cell"><?= htmlspecialchars(ucfirst($row['dokter_tujuan'])); ?></td>
+                    <td class="p-1" style="font-size: 0.75rem;"><?= date('d/m', strtotime($row['tanggal'])); ?></td>
+                    <td class="p-1 d-none d-sm-table-cell"><?= htmlspecialchars($row['waktu']); ?></td>
+                    <td class="p-1">
+                        <div class="text-wrap" style="max-width: 100px; font-size: 0.75rem; line-height: 1.2;">
                             <?= htmlspecialchars($row['keluhan']); ?>
-                        </td>
-                        <td>
+                        </div>
+                    </td>
+                    <td class="p-1 text-center">
+                        <div class="d-flex flex-column gap-1">
                             <?php if($row['status'] == 'menunggu'): ?>
-                                <span class="badge bg-warning text-dark px-3 py-2">Menunggu</span>
-                            <?php else: ?>
-                                <span class="badge bg-success px-3 py-2">Disetujui</span>
+                                <a href="admin.php?setujui=<?= $row['id']; ?>" class="btn btn-xs btn-primary" style="font-size: 0.7rem; padding: 2px 5px;">Setujui</a>
                             <?php endif; ?>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-center gap-2">
-                                <?php if($row['status'] == 'menunggu'): ?>
-                                    <a href="admin.php?setujui=<?= $row['id']; ?>" class="btn btn-sm btn-primary px-3">Setujui</a>
-                                <?php endif; ?>
-                                <a href="admin.php?hapus=<?= $row['id']; ?>" class="btn btn-sm btn-danger px-3" onclick="return confirm('Yakin ingin menghapus jadwal ini?');">Hapus</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php 
-                        } 
-                    } else {
-                        echo "<tr><td colspan='8' class='text-center text-muted py-4'>Belum ada jadwal konsultasi yang masuk.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
+                            <a href="admin.php?hapus=<?= $row['id']; ?>" class="btn btn-xs btn-danger" style="font-size: 0.7rem; padding: 2px 5px;" onclick="return confirm('Hapus?');">Hapus</a>
+                        </div>
+                    </td>
+                </tr>
+                <?php 
+                    } 
+                } else {
+                    echo "<tr><td colspan='7' class='text-center py-4'>Kosong</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
     </div>
 </div>
 
