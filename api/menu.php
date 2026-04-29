@@ -1,10 +1,8 @@
 <?php
-// Session start tidak terlalu dibutuhkan lagi jika pakai cookie murni, tapi biarkan saja aman.
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// SATPAM SEKARANG MENGECEK COOKIE
 if(!isset($_COOKIE['role']) || $_COOKIE['role'] == 'admin') {
     header("Location: login.php");
     exit;

@@ -26,9 +26,7 @@ if (session_status() == PHP_SESSION_NONE) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo isset($_COOKIE['role']) ? 'home.php' : '../index.html'; ?>">Home</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
                     
                     <?php if(!isset($_COOKIE['role'])): ?>
                         <li class="nav-item"><a class="btn btn-glass ms-lg-3" href="login.php">Login</a></li>
