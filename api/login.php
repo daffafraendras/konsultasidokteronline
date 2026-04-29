@@ -19,7 +19,6 @@ include 'koneksi.php';
 if(isset($_POST['submit_login'])) { 
     $email = mysqli_real_escape_string($koneksi, $_POST['email']);
     
-    // 👇 TAMBAHKAN BARIS INI (Ini yang tadi hilang/terlupa)
     $password = $_POST['password']; 
 
     $cek_user = mysqli_query($koneksi, "SELECT * FROM users WHERE email = '$email'");
@@ -27,16 +26,11 @@ if(isset($_POST['submit_login'])) {
     if(mysqli_num_rows($cek_user) > 0){
         $data_user = mysqli_fetch_assoc($cek_user);
         
-        // Sekarang $password sudah ada isinya, jadi error baris 24 akan hilang!
-        // ... kode di atasnya ...
-        // ... kode di atasnya (password_verify dan setcookie) ...
-        
         if (password_verify($password, $data_user['password'])) {
             // 1. SET COOKIE
             setcookie("role", $data_user['role'], time() + 86400, "/");
             setcookie("nama", $data_user['nama'], time() + 86400, "/");
 
-            // 2. PENGALIHAN MENGGUNAKAN JAVASCRIPT
             if ($data_user['role'] == 'admin') {
                 echo "<script>
                         alert('Login berhasil sebagai Admin!');
@@ -53,7 +47,6 @@ if(isset($_POST['submit_login'])) {
             echo "<script>alert('Password salah!');</script>";
         }
     } else {
-        // Jika email tidak ditemukan
         echo "<script>alert('Akun dengan email tersebut tidak ditemukan!');</script>";
     }
 }
