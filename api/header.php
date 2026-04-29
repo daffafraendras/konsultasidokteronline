@@ -34,10 +34,12 @@ if (session_status() == PHP_SESSION_NONE) {
                     
                     <?php elseif($_COOKIE['role'] == 'guest'): ?>
                         <li class="nav-item"><a class="btn btn-glass ms-lg-3" href="menu.php">💬 Konsultasi</a></li>
+                        <li class="nav-item"><span class="nav-link ms-lg-2"><?php echo htmlspecialchars($_COOKIE['nama'] ?? 'Guest'); ?></span></li>
                         <li class="nav-item"><a class="nav-link text-danger ms-lg-2 fw-bold" href="logout.php">Logout</a></li>
                     
                     <?php elseif($_COOKIE['role'] == 'admin'): ?>
                         <li class="nav-item"><a class="nav-link" href="admin.php">Panel Admin</a></li>
+                        <li class="nav-item"><span class="nav-link ms-lg-2"><?php echo htmlspecialchars($_COOKIE['nama'] ?? 'Admin'); ?></span></li>
                         <li class="nav-item"><a class="btn btn-glass ms-lg-3 text-danger" href="logout.php">Logout</a></li>
                     <?php endif; ?>
                 </ul>
