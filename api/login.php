@@ -33,12 +33,10 @@ if(isset($_POST['submit_login'])) {
 
             if ($data_user['role'] == 'admin') {
                 echo "<script>
-                        alert('Login berhasil sebagai Admin!');
                         window.location.href = 'admin.php';
                       </script>";
             } else {
                 echo "<script>
-                        alert('Login berhasil! Selamat datang.');
                         window.location.href = 'menu.php';
                       </script>";
             }

@@ -27,16 +27,11 @@ if(isset($_POST['submit_register'])){
         $query_simpan = "INSERT INTO users (nama, email, password, role) VALUES ('$nama', '$email', '$password_hashed', 'guest')";
         
         if(mysqli_query($koneksi, $query_simpan)){
-            // HAPUS INI:
-            // $_SESSION['role'] = 'guest';
-            // $_SESSION['nama'] = $nama;
-            
-            // GANTI MENJADI:
+        
             setcookie("role", "guest", time() + 86400, "/");
             setcookie("nama", $nama, time() + 86400, "/");
             
             echo "<script>
-                    alert('Pendaftaran berhasil! Selamat datang, $nama.');
                     window.location.href='menu.php';
                   </script>";
             exit;
