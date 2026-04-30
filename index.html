@@ -87,10 +87,10 @@
         let roleUser = getCookie("role");
 
         if (namaUser && roleUser) {
-            // Tentukan link sesuai jabatan
+            // Tentukan link sesuai role
             let linkDashboard = (roleUser === 'admin') ? 'api/admin.php' : 'api/menu.php';
             
-            // Ubah Navbar Otomatis (Format persis seperti di header.php)
+            // Navbar Otomatis 
             document.getElementById("menu-navigasi").innerHTML = `
                 <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="${linkDashboard}">Dashboard</a></li>
@@ -98,7 +98,7 @@
                 <li class="nav-item ms-lg-2"><a class="btn btn-danger btn-sm rounded-pill px-3" href="api/logout.php">Logout</a></li>
             `;
 
-            // Ubah Teks Papan Utama
+            // Papan Utama
             document.getElementById("konten-utama").innerHTML = `
                 <h1 class="display-5 fw-bold" style="color: #006b8f;">Halo, ${namaUser.replace(/\+/g, ' ')}!</h1>
                 <p class="lead mt-3">Selamat datang kembali di platform Telemedicine kami. Lanjutkan konsultasi kesehatanmu hari ini.</p>
@@ -108,7 +108,7 @@
             `;
         }
 
-        // --- 2. SCRIPT API BPS ---
+        // SCRIPT API BPS
         window.onload = function () {
             fetch('api/api_bps.php')
             .then(function(respons) {
